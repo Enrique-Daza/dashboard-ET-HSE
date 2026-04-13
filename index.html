@@ -92,11 +92,11 @@ body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSys
 <div id="tab-det" style="display:none"></div>
 <div class="footer" id="footer-text">Coordinación · ET VP HSE&S-CENIT</div>
 <script>
-  var s = document.createElement('script');
-  s.src = 'data.js?v=' + Date.now();
-  document.head.appendChild(s);
-  s.onload = function() { init(); };
-</script>
+var s = document.createElement('script');
+s.src = 'data.js?v=' + Date.now();
+document.head.appendChild(s);
+s.onload = function() { init(); };
+
 const COLS={'Vencido':'#EF9F27','Revisar':'#E24B4A','Por Vencer':'#FAC775','En progreso':'#378ADD','Sucesiva':'#7B3FC4','Extemporáneo':'#97C459','Cumplido':'#1D9E75','Sin Fecha':'#5C6478'};
 const BADGE_BG={'Vencido':'rgba(239,159,39,.18)','Revisar':'rgba(226,75,74,.18)','Por Vencer':'rgba(250,199,117,.13)','En progreso':'rgba(55,138,221,.18)','Sucesiva':'rgba(123,63,196,.18)','Extemporáneo':'rgba(151,196,89,.13)','Cumplido':'rgba(29,158,117,.18)','Sin Fecha':'rgba(92,100,120,.18)'};
 const TIPO_COLS=['#378ADD','#1D9E75','#EF9F27','#7B3FC4','#E24B4A','#5DCAA5','#D85A30','#FAC775','#AFA9EC','#97C459','#F0997B','#9FE1CB','#F4C0D1','#D3D1C7','#CECBF6','#B5D4F4'];
@@ -105,8 +105,6 @@ const SC=['#EF9F27','#E24B4A','#FAC775','#378ADD','#7B3FC4','#97C459','#1D9E75']
 const SN=['Vencido','Revisar','Por Vencer','En progreso','Sucesiva','Extemporáneo','Cumplido'];
 const ESTADOS_PANEL=['Vencido','Por Vencer','En progreso','Sucesiva','Extemporáneo','Cumplido','Sin Fecha'];
 const EQUIPO=[{n:'Aixa Perdomo',ini:'AP',rol:'PQR & Operaciones',mail:'aixaperdomo@cnt.vqingenieria.com'},{n:'Alexandra Serrano',ini:'AS',rol:'Gestión HSE',mail:'alexandraserrano@cnt.vqingenieria.com'},{n:'Adriana Guerrero',ini:'AG',rol:'Presupuesto',mail:'luzguerrero@cnt.vqingenieria.com'},{n:'Alejandra Suarez',ini:'ASu',rol:'Contratos & Convenios',mail:'yuritzasuarez@cnt.vqingenieria.com'},{n:'Ruddy Barragan',ini:'RB',rol:'Auditoría & Conocimiento',mail:'ruddybarragan@cnt.vqingenieria.com'},{n:'Laura Bermudez',ini:'LB',rol:'Desempeño & Informes',mail:'laurabermudez@cnt.vqingenieria.com'},{n:'Patricia Rangel',ini:'PR',rol:'Ambiental',mail:'belindarangel@cnt.vqingenieria.com'},{n:'Sonia Frayle',ini:'SF',rol:'',mail:'soniafrayle@cnt.vqingenieria.com'},{n:'Paola Lozano',ini:'PL',rol:'',mail:'paolalozano@cnt.vqingenieria.com'},{n:'Catalina Ferreira',ini:'CF',rol:'',mail:'catalina.ferreira@cnt.vqingenieria.com'},{n:'Eliana Bejarano',ini:'EB',rol:'',mail:'elianabejarano@cnt.vqingenieria.com'},{n:'Elkin Cantor',ini:'EC',rol:'',mail:'elkincanton@cnt.vqingenieria.com'},{n:'Diego Sanchez',ini:'DS',rol:'',mail:'diegosanchez@cnt.vqingenieria.com'},{n:'Enrique Daza',ini:'ED',rol:'Líder ET',mail:'enriquedaza@cnt.vqingenieria.com'}];
-
-document.getElementById('nav-update').textContent=DATA.actualizacion;
 
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
@@ -291,15 +289,12 @@ function buildDash(){
     const xOf=i=>pad.l+i/(labels.length-1)*iW;
     const yOf=v=>pad.t+iH-(v/maxV*iH);
     let defs='',lines='',dots='',xlbls='',ylbls='';
-    // Y axis ticks
     [0,Math.round(maxV/2),maxV].forEach(tick=>{
       const y=yOf(tick);
       ylbls+=`<text x="${pad.l-4}" y="${y+3}" text-anchor="end" fill="#5C6478" font-size="8" font-family="system-ui">${tick}</text>`;
       ylbls+=`<line x1="${pad.l}" y1="${y}" x2="${pad.l+iW}" y2="${y}" stroke="rgba(255,255,255,.04)" stroke-width="1"/>`;
     });
-    // X labels
     labels.forEach((l,i)=>{xlbls+=`<text x="${xOf(i)}" y="${H-6}" text-anchor="middle" fill="#5C6478" font-size="8" font-family="system-ui">${l}</text>`;});
-    // Series
     series.forEach(s=>{
       const pts=s.data.map((v,i)=>`${xOf(i)},${yOf(v)}`).join(' ');
       const fillPts=`${xOf(0)},${yOf(0)} `+pts+` ${xOf(5)},${yOf(0)}`;
@@ -396,7 +391,10 @@ function goTab(tab,el){
 
 function goBack(){document.getElementById('tab-det').style.display='none';document.getElementById('tab-prof').style.display='block';}
 
-buildDash();
+function init(){
+  document.getElementById('nav-update').textContent=DATA.actualizacion;
+  buildDash();
+}
 </script>
 </body>
 </html>
