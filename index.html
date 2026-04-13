@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">  
 <title>Follow-Up ET VP HSE&S · CENIT</title>
 <style>
 :root{--bg:#0C0F1A;--bg2:#151929;--bg3:#1C2235;--brd:rgba(255,255,255,.08);--brd2:rgba(255,255,255,.14);--txt:#E8EAF0;--txt2:#9BA3B8;--txt3:#5C6478;--venc:#EF9F27;--rev:#E24B4A;--pv:#FAC775;--ep:#378ADD;--suc:#7B3FC4;--ext:#97C459;--cum:#1D9E75;}
@@ -100,11 +97,11 @@ s.src = 'data.js?v=' + Date.now();
 document.head.appendChild(s);
 s.onload = function() { init(); };
 
-const COLS={'Vencido':'#EF9F27','Revisar':'#E24B4A','Por Vencer':'#FAC775','En progreso':'#378ADD','Sucesiva':'#7B3FC4','Extemporáneo':'#97C459','Cumplido':'#1D9E75','Sin Fecha':'#5C6478'};
-const BADGE_BG={'Vencido':'rgba(239,159,39,.18)','Revisar':'rgba(226,75,74,.18)','Por Vencer':'rgba(250,199,117,.13)','En progreso':'rgba(55,138,221,.18)','Sucesiva':'rgba(123,63,196,.18)','Extemporáneo':'rgba(151,196,89,.13)','Cumplido':'rgba(29,158,117,.18)','Sin Fecha':'rgba(92,100,120,.18)'};
+const COLS={'Vencido':'#E24B4A','Revisar':'#E24B4A','Por Vencer':'#FAC775','En progreso':'#378ADD','Sucesiva':'#7B3FC4','Extemporáneo':'#97C459','Cumplido':'#1D9E75','Sin Fecha':'#5C6478'};
+const BADGE_BG={'Vencido':'rgba(226,75,74,.18)','Revisar':'rgba(226,75,74,.18)','Por Vencer':'rgba(250,199,117,.13)','En progreso':'rgba(55,138,221,.18)','Sucesiva':'rgba(123,63,196,.18)','Extemporáneo':'rgba(151,196,89,.13)','Cumplido':'rgba(29,158,117,.18)','Sin Fecha':'rgba(92,100,120,.18)'};
 const TIPO_COLS=['#378ADD','#1D9E75','#EF9F27','#7B3FC4','#E24B4A','#5DCAA5','#D85A30','#FAC775','#AFA9EC','#97C459','#F0997B','#9FE1CB','#F4C0D1','#D3D1C7','#CECBF6','#B5D4F4'];
 const SK=['venc','rev','pv','ep','suc','ext','cum'];
-const SC=['#EF9F27','#E24B4A','#FAC775','#378ADD','#7B3FC4','#97C459','#1D9E75'];
+const SC=['#E24B4A','#E24B4A','#FAC775','#378ADD','#7B3FC4','#97C459','#1D9E75'];
 const SN=['Vencido','Revisar','Por Vencer','En progreso','Sucesiva','Extemporáneo','Cumplido'];
 const ESTADOS_PANEL=['Vencido','Por Vencer','En progreso','Sucesiva','Extemporáneo','Cumplido','Sin Fecha'];
 const EQUIPO=[{n:'Aixa Perdomo',ini:'AP',rol:'PQR & Operaciones',mail:'aixaperdomo@cnt.vqingenieria.com'},{n:'Alexandra Serrano',ini:'AS',rol:'Gestión HSE',mail:'alexandraserrano@cnt.vqingenieria.com'},{n:'Adriana Guerrero',ini:'AG',rol:'Presupuesto',mail:'luzguerrero@cnt.vqingenieria.com'},{n:'Alejandra Suarez',ini:'ASu',rol:'Contratos & Convenios',mail:'yuritzasuarez@cnt.vqingenieria.com'},{n:'Ruddy Barragan',ini:'RB',rol:'Auditoría & Conocimiento',mail:'ruddybarragan@cnt.vqingenieria.com'},{n:'Laura Bermudez',ini:'LB',rol:'Desempeño & Informes',mail:'laurabermudez@cnt.vqingenieria.com'},{n:'Patricia Rangel',ini:'PR',rol:'Ambiental',mail:'belindarangel@cnt.vqingenieria.com'},{n:'Sonia Frayle',ini:'SF',rol:'',mail:'soniafrayle@cnt.vqingenieria.com'},{n:'Paola Lozano',ini:'PL',rol:'',mail:'paolalozano@cnt.vqingenieria.com'},{n:'Catalina Ferreira',ini:'CF',rol:'',mail:'catalina.ferreira@cnt.vqingenieria.com'},{n:'Eliana Bejarano',ini:'EB',rol:'',mail:'elianabejarano@cnt.vqingenieria.com'},{n:'Elkin Cantor',ini:'EC',rol:'',mail:'elkincanton@cnt.vqingenieria.com'},{n:'Diego Sanchez',ini:'DS',rol:'',mail:'diegosanchez@cnt.vqingenieria.com'},{n:'Enrique Daza',ini:'ED',rol:'Líder ET',mail:'enriquedaza@cnt.vqingenieria.com'}];
@@ -236,7 +233,7 @@ function buildDash(){
   <div class="sec">
     <div class="sec-lbl">Tendencia semanal</div>
     <div class="tend-leg">
-      <span class="tl-item"><span class="tl-sq" style="background:#EF9F27"></span>Vencidos</span>
+      <span class="tl-item"><span class="tl-sq" style="background:#E24B4A"></span>Vencidos</span>
       <span class="tl-item"><span class="tl-sq" style="background:#1D9E75"></span>Cumplidos</span>
       <span class="tl-item"><span class="tl-sq" style="background:#378ADD"></span>En progreso</span>
     </div>
@@ -272,7 +269,7 @@ function buildDash(){
       angle+=a+gap;
     });
     const cumE=(byEst['Cumplido']||0)+(byEst['Extemporáneo']||0);const base=all.length-(byEst['Sucesiva']||0);const pct=base>0?Math.round(cumE/base*100):0;
-    wrap.innerHTML=`<svg viewBox="0 0 ${S} ${S}" width="${S}" height="${S}" xmlns="http://www.w3.org/2000/svg">${paths}<text x="${cx}" y="${cy-6}" text-anchor="middle" fill="#E8EAF0" font-size="18" font-weight="700" font-family="system-ui">${pct}%</text><text x="${cx}" y="${cy+11}" text-anchor="middle" fill="#5C6478" font-size="9" font-family="system-ui">cierre</text></svg>`;
+    wrap.innerHTML=`<svg viewBox="0 0 ${S} ${S}" width="${S}" height="${S}" xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
   })();
 
   const v=kpis.vencidos,c=kpis.cumplidos,e=kpis.en_progreso;
@@ -283,7 +280,7 @@ function buildDash(){
     const iW=W-pad.l-pad.r,iH=H-pad.t-pad.b;
     const labels=['S-5','S-4','S-3','S-2','S-1','Actual'];
     const series=[
-      {label:'Vencidos',col:'#EF9F27',data:[v+3,v+2,v+2,v+1,v+1,v]},
+      {label:'Vencidos',col:'#E24B4A',data:[v+3,v+2,v+2,v+1,v+1,v]},
       {label:'Cumplidos',col:'#1D9E75',data:[Math.max(0,c-5),Math.max(0,c-4),Math.max(0,c-3),Math.max(0,c-2),Math.max(0,c-1),c]},
       {label:'En progreso',col:'#378ADD',data:[e+5,e+4,e+3,e+2,e+1,e]}
     ];
