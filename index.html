@@ -201,7 +201,7 @@ function buildDash(){
   const byTipo={};all.forEach(t=>{if(t.tipo)byTipo[t.tipo]=(byTipo[t.tipo]||0)+1;});
   const tiposOrd=Object.entries(byTipo).sort((a,b)=>b[1]-a[1]);
   const estadosBtns=[
-    {key:'todos',label:'Total',cnt:kpis.total,col:'#9BA3B8'},
+    {key:'todos',label:'Total',cnt:all.length,col:'#9BA3B8'},
     {key:'Vencido',label:'Vencido',cnt:byEst['Vencido']||0,col:COLS.Vencido},
     {key:'Por Vencer',label:'Por Vencer',cnt:byEst['Por Vencer']||0,col:COLS['Por Vencer']},
     {key:'En progreso',label:'En progreso',cnt:byEst['En progreso']||0,col:COLS['En progreso']},
@@ -266,7 +266,7 @@ function buildDash(){
       paths+=`<path d="M${x1},${y1} A${R},${R} 0 ${lg} 1 ${x2},${y2} L${xi2},${yi2} A${ri},${ri} 0 ${lg} 0 ${xi1},${yi1} Z" fill="${cols[i]}" opacity=".92"/>`;
       angle+=a+gap;
     });
-    const pct=kpis.pct_cierre;
+    const cumE=(byEst['Cumplido']||0)+(byEst['Extemporáneo']||0);const base=all.length-(byEst['Sucesiva']||0);const pct=base>0?Math.round(cumE/base*100):0;
     wrap.innerHTML=`<svg viewBox="0 0 ${S} ${S}" width="${S}" height="${S}" xmlns="http://www.w3.org/2000/svg">${paths}<text x="${cx}" y="${cy-6}" text-anchor="middle" fill="#E8EAF0" font-size="18" font-weight="700" font-family="system-ui">${pct}%</text><text x="${cx}" y="${cy+11}" text-anchor="middle" fill="#5C6478" font-size="9" font-family="system-ui">cierre</text></svg>`;
   })();
 
