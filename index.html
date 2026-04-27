@@ -150,7 +150,8 @@ function buildPanels(filtro){
       const f=new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]));
       return(hoy-f)/86400000<=8;
     });
-  } else if(filtro!=='todos')items=all.filter(t=>t.estado===filtro);
+  } else if(filtro==='vphses')items=all.filter(t=>t.tipo==='VP HSE&S');
+  else if(filtro!=='todos')items=all.filter(t=>t.estado===filtro);
   const autoOpen=!['todos','activos'].includes(filtro);
   if(filtro==='historial'){
     ['Cumplido','Extemporáneo'].forEach(est=>{const sub=items.filter(t=>t.estado===est);if(sub.length)renderPanel(wrap,est,sub,false,true);});
@@ -202,6 +203,7 @@ function buildDash(){
   });
   const byTipo={};all.forEach(t=>{if(t.tipo)byTipo[t.tipo]=(byTipo[t.tipo]||0)+1;});
   const tiposOrd=Object.entries(byTipo).sort((a,b)=>b[1]-a[1]);
+  const cntVpHses=all.filter(t=>t.tipo==='VP HSE&S').length;
   const estadosBtns=[
     {key:'todos',label:'Total',cnt:all.length,col:'#9BA3B8'},
     {key:'Vencido',label:'Vencido',cnt:byEst['Vencido']||0,col:COLS.Vencido},
@@ -209,7 +211,10 @@ function buildDash(){
     {key:'En progreso',label:'En progreso',cnt:byEst['En progreso']||0,col:COLS['En progreso']},
     {key:'Sucesiva',label:'Sucesiva',cnt:byEst['Sucesiva']||0,col:COLS.Sucesiva},
     {key:'Cumplido',label:'Cumplido',cnt:byEst['Cumplido']||0,col:COLS.Cumplido},
+  ];
+  const filtrosExtra=[
     {key:'historial',label:'Historial ≤8d',cnt:historial.length,col:'#5DCAA5'},
+    {key:'vphses',label:'VP HSE&S',cnt:cntVpHses,col:'#185FA5'},
   ];
   const estadosTorta=Object.keys(COLS).filter(e=>byEst[e]);
   const btnHtml=estadosBtns.map(b=>{
@@ -229,6 +234,7 @@ function buildDash(){
       <div class="btn-list">${btnHtml}</div>
     </div>
   </div>
+  <div style="display:flex;gap:6px;padding:0 10px 4px">${filtrosExtra.map(b=>{const safe=b.key.replace(/[^a-zA-Z0-9]/g,'_');return`<button class="est-btn" id="eb-${safe}" style="flex:1" onclick="toggleEstado('${b.key}')"><div class="est-dot" style="background:${b.col}"></div><span class="est-name">${b.label}</span><span class="est-cnt" style="color:${b.col}">${b.cnt}</span></button>`;}).join('')}</div>
   <div id="assign-panels"></div>
   <div class="sec">
     <div class="sec-lbl">Tendencia semanal</div>
