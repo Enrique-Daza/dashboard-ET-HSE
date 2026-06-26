@@ -393,32 +393,62 @@ function goTab(tab,el){
 
 function goBack(){document.getElementById('tab-det').style.display='none';document.getElementById('tab-prof').style.display='block';}
 
-function init(){
-  document.getElementById('nav-update').textContent=DATA.actualizacion||'';
-  var info='<b>DIAG v2</b> — '+new Date().toLocaleTimeString()+'<br>';
-  info+='TIPO: '+typeof DATA.asignaciones+'<br>';
-  if(typeof DATA.asignaciones==='string'){
-    info+='LARGO: '+DATA.asignaciones.length+'<br>';
-    var cl=DATA.asignaciones.replace(/\r\n/g,' ').replace(/\r/g,' ').replace(/\n/g,' ').trim();
-    info+='PRIMER CHAR: ['+cl.charAt(0)+'] ULTIMO: ['+cl.charAt(cl.length-1)+']<br>';
-    if(cl.charAt(0)!=='[') cl='['+cl+']';
-    info+='CON CORCHETES: ['+cl.charAt(0)+']...['+cl.charAt(cl.length-1)+']<br>';
-    try{
-      var parsed=JSON.parse(cl);
-      info+='<b style="color:#1D9E75">PARSE OK — '+parsed.length+' elementos</b>';
-      DATA.asignaciones=parsed;
-    }catch(e){
-      info+='<b style="color:#E24B4A">ERROR: '+e.message+'</b><br>';
-      var pos=parseInt((e.message.match(/\d+/)||['0'])[0]);
-      info+='POS '+pos+':<br><code style="font-size:10px">...'+cl.substring(Math.max(0,pos-100),pos)+'<b style="color:red;font-size:16px">|ERROR|</b>'+cl.substring(pos,pos+100).replace(/</g,'&lt;')+'...</code>';
-      DATA.asignaciones=[];
+function fixBrokenJson(s){
+  // Repara comillas de contenido que PA no escapó dentro de valores JSON.
+  // Lógica: recorre char por char. Cuando estamos dentro de un string JSON
+  // y encontramos un " que NO es seguido por caracter estructural (: , } ]),
+  // lo escapamos como \".
+  var out=[];var inStr=false;var i=0;var len=s.length;
+  while(i<len){
+    var ch=s[i];
+    // Backslash dentro de string → copiar par literal
+    if(ch==='\\'&&inStr){out.push(ch,s[i+1]||'');i+=2;continue;}
+    if(ch==='"'){
+      if(!inStr){
+        inStr=true;out.push(ch);
+      } else {
+        // Estamos en un string — ¿es cierre estructural o comilla de contenido?
+        var j=i+1;while(j<len&&(s[j]===' '||s[j]==='\t'))j++;
+        var next=s[j]||'';
+        if(next===':'||next===','||next==='}'||next===']'||j>=len){
+          // Cierre estructural
+          inStr=false;out.push(ch);
+        } else {
+          // Comilla de contenido → escapar
+          out.push('\\',ch);
+        }
+      }
+    } else {
+      out.push(ch);
     }
-  } else if(Array.isArray(DATA.asignaciones)){
-    info+='<b style="color:#1D9E75">Array con '+DATA.asignaciones.length+' items</b>';
-  } else {
-    info+='NULL/UNDEFINED';DATA.asignaciones=[];
+    i++;
   }
-  document.getElementById('tab-dash').innerHTML='<div class="sec"><div class="sec-lbl">Diagnostico v2</div><div style="font-size:11px;color:#9BA3B8;line-height:1.8;word-break:break-all">'+info+'</div></div>';
+  return out.join('');
+}
+
+function init(){
+  // Normalizar DATA.asignaciones — maneja:
+  // 1. String con objetos sin corchetes + trailing comma + comillas internas sin escapar
+  // 2. Array nativo
+  // 3. null/undefined
+  if(Array.isArray(DATA.asignaciones)){
+    // ya es array
+  } else if(typeof DATA.asignaciones==='string'){
+    try{
+      var cl=DATA.asignaciones.replace(/\r\n/g,' ').replace(/\r/g,' ').replace(/\n/g,' ').trim();
+      // Quitar trailing comma
+      cl=cl.replace(/,\s*$/,'');
+      // Agregar corchetes si faltan
+      if(cl.charAt(0)!=='[') cl='['+cl+']';
+      // Reparar comillas de contenido sin escapar
+      cl=fixBrokenJson(cl);
+      DATA.asignaciones=JSON.parse(cl);
+    }catch(e){DATA.asignaciones=[];}
+  } else {
+    DATA.asignaciones=[];
+  }
+  document.getElementById('nav-update').textContent=DATA.actualizacion||'';
+  buildDash();
 }
 </script>
 </body>
