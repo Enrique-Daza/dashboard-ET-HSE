@@ -1,1 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Follow-Up ET VP HSE&S · CENIT</title>
+<style>
+:root{--bg:#0C0F1A;--bg2:#151929;--bg3:#1C2235;--brd:rgba(255,255,255,.08);--brd2:rgba(255,255,255,.14);--txt:#E8EAF0;--txt2:#9BA3B8;--txt3:#5C6478;--venc:#EF9F27;--rev:#E24B4A;--pv:#FAC775;--ep:#378ADD;--suc:#7B3FC4;--ext:#97C459;--cum:#1D9E75;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px}
+.nav{background:var(--bg2);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 12px;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:50}
+.nav::-webkit-scrollbar{display:none}
+.nav-brand{font-size:10px;font-weight:600;color:var(--txt3);white-space:nowrap;padding:11px 10px 11px 0;border-right:1px solid var(--brd);margin-right:8px;flex-shrink:0;letter-spacing:.5px;text-transform:uppercase}
+.nav-brand span{color:var(--ep)}
+.nav-tab{padding:11px 10px;font-size:12px;color:var(--txt3);white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;flex-shrink:0}
+.nav-tab.active{color:var(--txt);border-bottom-color:var(--ep)}
+.nav-update{margin-left:auto;font-size:10px;color:var(--txt3);white-space:nowrap;padding-left:12px;flex-shrink:0}
+.sec{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;margin:10px;padding:14px}
+.sec-lbl{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;font-weight:600}
+.dona-wrap{display:flex;gap:12px;align-items:flex-start}
+.dona-canvas{width:140px;flex-shrink:0}
+.btn-list{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+.est-btn{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:8px;cursor:pointer;border:1px solid var(--brd);background:transparent;transition:all .15s;width:100%}
+.est-btn:hover{border-color:var(--brd2);background:rgba(255,255,255,.04)}
+.est-btn.active{border-color:transparent}
+.est-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.est-name{font-size:11px;color:var(--txt2);flex:1;text-align:left}
+.est-cnt{font-size:12px;font-weight:600}
+.assign-section{margin:0 10px 7px}
+.assign-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg2);border:1px solid var(--brd);border-radius:10px;cursor:pointer}
+.assign-hdr.open{border-radius:10px 10px 0 0;border-bottom-color:transparent}
+.assign-hdr-left{display:flex;align-items:center;gap:8px}
+.assign-badge{padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600}
+.assign-count{font-size:12px;color:var(--txt2)}
+.assign-chev{font-size:10px;color:var(--txt3);transition:transform .2s}
+.assign-chev.open{transform:rotate(180deg)}
+.assign-body{background:var(--bg2);border:1px solid var(--brd);border-top:none;border-radius:0 0 10px 10px;display:none}
+.assign-body.open{display:block}
+.arow{padding:10px 14px;border-bottom:1px solid var(--brd)}
+.arow:last-child{border-bottom:none}
+.arow-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px}
+.arow-tarea{font-size:12px;color:var(--txt);flex:1;line-height:1.4}
+.arow-dias{font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0}
+.arow-meta{font-size:10px;color:var(--txt3);margin-bottom:2px}
+.arow-obs{font-size:11px;color:var(--txt2);background:var(--bg3);border-left:2px solid var(--brd2);padding:4px 8px;border-radius:0 4px 4px 0;margin-top:5px;line-height:1.5}
+.tipo-leg{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;margin-bottom:10px}
+.tleg-row{display:flex;align-items:center;gap:5px;padding:2px 0}
+.tleg-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+.tleg-name{font-size:10px;color:var(--txt2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tleg-num{font-size:10px;font-weight:600;color:var(--txt)}
+.tend-leg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.tl-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--txt3)}
+.tl-sq{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.prof-card{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;margin:0 10px 8px;padding:14px;cursor:pointer;transition:border-color .15s}
+.prof-card:hover{border-color:var(--brd2)}
+.prof-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.prof-name{font-size:13px;font-weight:600;color:var(--txt)}
+.prof-meta{font-size:10px;color:var(--txt3)}
+.prof-bar{display:flex;height:12px;border-radius:4px;overflow:hidden;gap:1px;margin-bottom:6px}
+.stack-seg{height:100%}
+.back-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--txt3);margin:10px 10px 4px;cursor:pointer;padding:5px 9px;border:1px solid var(--brd);border-radius:7px;background:var(--bg2)}
+.avatar{width:44px;height:44px;border-radius:50%;background:#0C447C;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#B5D4F4;flex-shrink:0}
+.kpi-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:12px}
+.km{background:var(--bg3);border-radius:8px;padding:8px 5px;text-align:center}
+.km-val{font-size:18px;font-weight:600}
+.km-lbl{font-size:9px;color:var(--txt3);margin-top:1px;text-transform:uppercase}
+.det-chips{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:8px 10px 4px}
+.det-chips::-webkit-scrollbar{display:none}
+.dchip{padding:4px 10px;border-radius:16px;font-size:11px;cursor:pointer;white-space:nowrap;border:1px solid var(--brd);color:var(--txt2);background:transparent;transition:all .15s}
+.footer{text-align:center;font-size:10px;color:var(--txt3);padding:16px 10px 8px;border-top:1px solid var(--brd);margin:10px 10px 0}
+.empty-state{padding:40px 20px;text-align:center;color:var(--txt3);font-size:12px;line-height:1.8}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">Follow-Up <span>ET</span> VP HSE&S &middot; CENIT</div>
+  <div class="nav-tab active" id="nt-dash" onclick="goTab('dash',this)">Dashboard</div>
+  <div class="nav-tab" id="nt-prof" onclick="goTab('prof',this)">Profesionales</div>
+  <div class="nav-update" id="nav-update"></div>
+</nav>
+<div id="tab-dash"></div>
+<div id="tab-prof" style="display:none"></div>
+<div id="tab-det" style="display:none"></div>
+<div class="footer" id="footer-text">Coordinación &middot; ET VP HSE&amp;S-CENIT</div>
+<script>
+var s=document.createElement('script');
+s.src='data.js?v='+Date.now();
+document.head.appendChild(s);
+s.onload=function(){init();};
+
+const COLS={'Vencido':'#E24B4A','Revisar':'#E24B4A','Por Vencer':'#FAC775','En progreso':'#378ADD','Sucesiva':'#7B3FC4','Extemporaneo':'#97C459','Extemporáneo':'#97C459','Cumplido':'#1D9E75','Sin Fecha':'#5C6478'};
+const BADGE_BG={'Vencido':'rgba(226,75,74,.18)','Revisar':'rgba(226,75,74,.18)','Por Vencer':'rgba(250,199,117,.13)','En progreso':'rgba(55,138,221,.18)','Sucesiva':'rgba(123,63,196,.18)','Extemporaneo':'rgba(151,196,89,.13)','Extemporáneo':'rgba(151,196,89,.13)','Cumplido':'rgba(29,158,117,.18)','Sin Fecha':'rgba(92,100,120,.18)'};
+const TIPO_COLS=['#378ADD','#1D9E75','#EF9F27','#7B3FC4','#E24B4A','#5DCAA5','#D85A30','#FAC775','#AFA9EC','#97C459','#F0997B','#9FE1CB','#F4C0D1','#D3D1C7','#CECBF6','#B5D4F4'];
+const SK=['venc','rev','pv','ep','suc','ext','cum'];
+const SC=['#E24B4A','#E24B4A','#FAC775','#378ADD','#7B3FC4','#97C459','#1D9E75'];
+const SN=['Vencido','Revisar','Por Vencer','En progreso','Sucesiva','Extemporáneo','Cumplido'];
+const ESTADOS_PANEL=['Vencido','Por Vencer','En progreso','Sucesiva','Extemporáneo','Cumplido','Sin Fecha'];
+const EQUIPO=[{n:'Aixa Perdomo',ini:'AP',rol:'PQR & Operaciones',mail:'aixaperdomo@cnt.vqingenieria.com'},{n:'Alexandra Serrano',ini:'AS',rol:'Gestión HSE',mail:'alexandraserrano@cnt.vqingenieria.com'},{n:'Adriana Guerrero',ini:'AG',rol:'Presupuesto',mail:'luzguerrero@cnt.vqingenieria.com'},{n:'Alejandra Suarez',ini:'ASu',rol:'Contratos & Convenios',mail:'yuritzasuarez@cnt.vqingenieria.com'},{n:'Ruddy Barragan',ini:'RB',rol:'Auditoría & Conocimiento',mail:'ruddybarragan@cnt.vqingenieria.com'},{n:'Laura Bermudez',ini:'LB',rol:'Desempeño & Informes',mail:'laurabermudez@cnt.vqingenieria.com'},{n:'Patricia Rangel',ini:'PR',rol:'Ambiental',mail:'belindarangel@cnt.vqingenieria.com'},{n:'Sonia Frayle',ini:'SF',rol:'',mail:'soniafrayle@cnt.vqingenieria.com'},{n:'Paola Lozano',ini:'PL',rol:'',mail:'paolalozano@cnt.vqingenieria.com'},{n:'Catalina Ferreira',ini:'CF',rol:'',mail:'catalina.ferreira@cnt.vqingenieria.com'},{n:'Eliana Bejarano',ini:'EB',rol:'',mail:'elianabejarano@cnt.vqingenieria.com'},{n:'Elkin Cantor',ini:'EC',rol:'',mail:'elkincanton@cnt.vqingenieria.com'},{n:'Diego Sanchez',ini:'DS',rol:'',mail:'diegosanchez@cnt.vqingenieria.com'},{n:'Enrique Daza',ini:'ED',rol:'Líder ET',mail:'enriquedaza@cnt.vqingenieria.com'}];
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ─── NORMALIZACIÓN DE DATA.asignaciones ─── */
+function normAsignaciones(){
+  // Caso 1: ya es array nativo (json() funcionó en PA o futuro fix) → sin cambios
+  if(Array.isArray(DATA.asignaciones))return;
+  // Caso 2: llegó como string → limpiar saltos de línea reales y parsear
+  if(typeof DATA.asignaciones==='string'){
+    try{
+      var cl=DATA.asignaciones.replace(/\r\n/g,' ').replace(/\r/g,' ').replace(/\n/g,' ');
+      DATA.asignaciones=JSON.parse(cl);
+      return;
+    }catch(e){}
+  }
+  // Caso 3: null / undefined / parse fallido → array vacío como red de seguridad
+  DATA.asignaciones=[];
+}
+
+function diasLabel(t){
+  const d=t.dias||0;
+  if(t.estado==='Vencido')return{txt:'+'+Math.abs(d)+'d',col:COLS.Vencido};
+  if(t.estado==='Por Vencer')return d===0?{txt:'Hoy',col:'#E24B4A'}:{txt:d+'d',col:COLS['Por Vencer']};
+  if(t.estado==='Sucesiva'){const fpc=t.fecha_proxima_ciclo||'';const label=d<0?('Venc. '+fpc):d===0?('Hoy · '+fpc):(fpc?'Prox '+d+'d · '+fpc:'Activa');return{txt:label,col:d<0?COLS.Vencido:d<=3?COLS['Por Vencer']:COLS.Sucesiva};}
+  if(t.estado==='Extemporáneo'||t.estado==='Extemporaneo')return{txt:t.fecha_cumplimiento?''+t.fecha_cumplimiento:'Extemporaneo',col:COLS['Extemporáneo']};
+  if(t.estado==='Cumplido')return{txt:t.fecha_cumplimiento?''+t.fecha_cumplimiento:(t.fecha_fin||'Cerrado'),col:COLS.Cumplido};
+  if(d>0)return{txt:d+'d',col:COLS['En progreso']};
+  return{txt:'',col:'transparent'};
+}
+
+function buildArow(t,showObs){
+  const d=diasLabel(t);
+  const obs=(showObs&&t.observacion)?'<div class="arow-obs">'+esc(t.observacion)+'</div>':'';
+  return'<div class="arow"><div class="arow-top"><div class="arow-tarea">'+esc(t.tarea)+'</div><div class="arow-dias" style="color:'+d.col+'">'+d.txt+'</div></div><div class="arow-meta">'+esc(t.id)+' · '+esc(t.responsable)+' · '+esc(t.tipo)+'</div>'+obs+'</div>';
+}
+
+function renderPanel(wrap,est,list,showObs,startOpen){
+  if(!list.length)return;
+  const id='p_'+est.replace(/[^a-zA-Z0-9]/g,'_');
+  const col=COLS[est]||'#9BA3B8';const bg=BADGE_BG[est]||'rgba(255,255,255,.1)';
+  const rows=list.map(function(t){return buildArow(t,showObs);}).join('');
+  const oc=startOpen?'open':'';
+  wrap.innerHTML+='<div class="assign-section"><div class="assign-hdr '+oc+'" id="hdr-'+id+'" onclick="togglePanel(\''+id+'\')"><div class="assign-hdr-left"><div class="assign-badge" style="background:'+bg+';color:'+col+'">'+est+'</div><div class="assign-count">'+list.length+' asignacion'+(list.length!==1?'es':'')+'</div></div><div class="assign-chev '+oc+'" id="chev-'+id+'">&#9660;</div></div><div class="assign-body '+oc+'" id="body-'+id+'">'+rows+'</div></div>';
+}
+
+function buildPanels(filtro){
+  const wrap=document.getElementById('assign-panels');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  const all=DATA.asignaciones;
+  var items=all;
+  if(filtro==='activos')items=all.filter(function(t){return['Vencido','Revisar','Por Vencer','En progreso'].indexOf(t.estado)>=0;});
+  else if(filtro==='historial'){
+    const hoy=new Date();
+    items=all.filter(function(t){
+      if(['Cumplido','Extemporáneo','Extemporaneo'].indexOf(t.estado)<0||!t.fecha_cumplimiento)return false;
+      const p=t.fecha_cumplimiento.split('/');
+      if(p.length<3)return false;
+      const f=new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]));
+      return(hoy-f)/86400000<=8;
+    });
+  } else if(filtro==='vphses'){
+    items=all.filter(function(t){return t.tipo==='VP HSE&S';});
+  } else if(filtro!=='todos'){
+    items=all.filter(function(t){return t.estado===filtro;});
+  }
+  const autoOpen=['todos','activos'].indexOf(filtro)<0;
+  if(filtro==='historial'){
+    ['Cumplido','Extemporáneo'].forEach(function(est){const sub=items.filter(function(t){return t.estado===est||(est==='Extemporáneo'&&t.estado==='Extemporaneo');});if(sub.length)renderPanel(wrap,est,sub,false,true);});
+  } else {
+    ESTADOS_PANEL.forEach(function(est){
+      const list=items.filter(function(t){return t.estado===est||(est==='Extemporáneo'&&t.estado==='Extemporaneo');});
+      renderPanel(wrap,est,list,est==='Vencido'||est==='Por Vencer',autoOpen);
+    });
+  }
+  if(!items.length)wrap.innerHTML='<div class="empty-state">Sin asignaciones en esta categoría</div>';
+}
+
+function toggleEstado(est){
+  document.querySelectorAll('.est-btn').forEach(function(b){b.classList.remove('active');b.style.background='transparent';b.style.borderColor='rgba(255,255,255,.08)';});
+  const btn=document.getElementById('eb-'+est.replace(/[^a-zA-Z0-9]/g,'_'));
+  if(btn){btn.classList.add('active');const col=COLS[est]||'#378ADD';btn.style.background=col+'22';btn.style.borderColor=col;}
+  buildPanels(est);
+}
+
+function togglePanel(id){
+  ['hdr','body','chev'].forEach(function(p){const el=document.getElementById(p+'-'+id);if(el)el.classList.toggle('open');});
+}
+
+function buildDash(){
+  const kpis=DATA.kpis||{};
+  /* ── PROTECCIÓN TOTAL: si asignaciones no es array o está vacío se muestra aviso ── */
+  const all=Array.isArray(DATA.asignaciones)?DATA.asignaciones:[];
+
+  if(DATA.actualizacion){
+    const ft=document.getElementById('footer-text');
+    if(ft)ft.textContent='Coordinación · ET VP HSE&S-CENIT  ·  Follow up: '+DATA.actualizacion;
+  }
+
+  if(!all.length){
+    document.getElementById('tab-dash').innerHTML='<div class="empty-state">Datos no disponibles todavía.<br>Ejecuta el flujo <b>JSON Generator</b> manualmente<br>y recarga la página.</div>';
+    return;
+  }
+
+  const byEst={};all.forEach(function(t){byEst[t.estado]=(byEst[t.estado]||0)+1;});
+  // normalizar Extemporaneo sin tilde
+  if(byEst['Extemporaneo']){byEst['Extemporáneo']=(byEst['Extemporáneo']||0)+byEst['Extemporaneo'];delete byEst['Extemporaneo'];}
+
+  const hoy=new Date();
+  const historial=all.filter(function(t){
+    if(['Cumplido','Extemporáneo','Extemporaneo'].indexOf(t.estado)<0||!t.fecha_cumplimiento)return false;
+    const p=t.fecha_cumplimiento.split('/');if(p.length<3)return false;
+    const f=new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]));
+    return(hoy-f)/86400000<=8;
+  });
+  const byTipo={};all.forEach(function(t){if(t.tipo)byTipo[t.tipo]=(byTipo[t.tipo]||0)+1;});
+  const tiposOrd=Object.entries(byTipo).sort(function(a,b){return b[1]-a[1];});
+  const cntVpHses=all.filter(function(t){return t.tipo==='VP HSE&S';}).length;
+
+  const estadosBtns=[
+    {key:'todos',label:'Total',cnt:all.length,col:'#9BA3B8'},
+    {key:'Vencido',label:'Vencido',cnt:byEst['Vencido']||0,col:COLS.Vencido},
+    {key:'Por Vencer',label:'Por Vencer',cnt:byEst['Por Vencer']||0,col:COLS['Por Vencer']},
+    {key:'En progreso',label:'En progreso',cnt:byEst['En progreso']||0,col:COLS['En progreso']},
+    {key:'Sucesiva',label:'Sucesiva',cnt:byEst['Sucesiva']||0,col:COLS.Sucesiva},
+    {key:'Cumplido',label:'Cumplido',cnt:byEst['Cumplido']||0,col:COLS.Cumplido}
+  ];
+  const filtrosExtra=[
+    {key:'historial',label:'Historial ≤8d',cnt:historial.length,col:'#5DCAA5'},
+    {key:'vphses',label:'VP HSE&S',cnt:cntVpHses,col:'#185FA5'}
+  ];
+  const estadosTorta=Object.keys(COLS).filter(function(e){return byEst[e];});
+
+  var btnHtml='';
+  estadosBtns.forEach(function(b){
+    const safe=b.key.replace(/[^a-zA-Z0-9]/g,'_');
+    btnHtml+='<button class="est-btn" id="eb-'+safe+'" onclick="toggleEstado(\''+b.key+'\')"><div class="est-dot" style="background:'+b.col+'"></div><span class="est-name">'+b.label+'</span><span class="est-cnt" style="color:'+b.col+'">'+b.cnt+'</span></button>';
+  });
+
+  var extraHtml='';
+  filtrosExtra.forEach(function(b){
+    const safe=b.key.replace(/[^a-zA-Z0-9]/g,'_');
+    extraHtml+='<button class="est-btn" id="eb-'+safe+'" style="flex:1" onclick="toggleEstado(\''+b.key+'\')"><div class="est-dot" style="background:'+b.col+'"></div><span class="est-name">'+b.label+'</span><span class="est-cnt" style="color:'+b.col+'">'+b.cnt+'</span></button>';
+  });
+
+  document.getElementById('tab-dash').innerHTML=
+    '<div class="sec"><div class="sec-lbl">Distribución por estado</div><div class="dona-wrap"><div class="dona-canvas" id="dona-torta-wrap"></div><div class="btn-list">'+btnHtml+'</div></div></div>'+
+    '<div style="display:flex;gap:6px;padding:0 10px 4px">'+extraHtml+'</div>'+
+    '<div id="assign-panels"></div>'+
+    '<div class="sec"><div class="sec-lbl">Tendencia semanal</div><div class="tend-leg"><span class="tl-item"><span class="tl-sq" style="background:#E24B4A"></span>Vencidos</span><span class="tl-item"><span class="tl-sq" style="background:#1D9E75"></span>Cumplidos</span><span class="tl-item"><span class="tl-sq" style="background:#378ADD"></span>En progreso</span></div><div id="tend-wrap" style="width:100%;height:180px"></div></div>'+
+    '<div class="sec"><div class="sec-lbl">Distribución por tipo</div><div class="tipo-leg" id="tipo-leg"></div><div id="tipo-wrap" style="width:100%;height:200px;display:flex;align-items:center;justify-content:center"></div></div>';
+
+  const btnTodos=document.getElementById('eb-todos');
+  if(btnTodos){btnTodos.classList.add('active');btnTodos.style.background='#9BA3B833';btnTodos.style.borderColor='#9BA3B8';}
+
+  // Dona estado
+  (function(){
+    const wrap=document.getElementById('dona-torta-wrap');if(!wrap)return;
+    const vals=estadosTorta.map(function(e){return byEst[e]||0;});
+    const cols=estadosTorta.map(function(e){return COLS[e];});
+    const total=vals.reduce(function(a,b){return a+b;},0)||1;
+    const S=140,cx=S/2,cy=S/2,R=52,ri=32,gap=0.03;
+    var angle=-Math.PI/2,paths='';
+    vals.forEach(function(v,i){
+      if(!v)return;
+      const a=v/total*Math.PI*2-gap;
+      const x1=cx+R*Math.cos(angle),y1=cy+R*Math.sin(angle);
+      const x2=cx+R*Math.cos(angle+a),y2=cy+R*Math.sin(angle+a);
+      const xi1=cx+ri*Math.cos(angle),yi1=cy+ri*Math.sin(angle);
+      const xi2=cx+ri*Math.cos(angle+a),yi2=cy+ri*Math.sin(angle+a);
+      const lg=a>Math.PI?1:0;
+      paths+='<path d="M'+x1+','+y1+' A'+R+','+R+' 0 '+lg+' 1 '+x2+','+y2+' L'+xi2+','+yi2+' A'+ri+','+ri+' 0 '+lg+' 0 '+xi1+','+yi1+' Z" fill="'+cols[i]+'" opacity=".92"/>';
+      angle+=a+gap;
+    });
+    wrap.innerHTML='<svg viewBox="0 0 '+S+' '+S+'" width="'+S+'" height="'+S+'" xmlns="http://www.w3.org/2000/svg">'+paths+'</svg>';
+  })();
+
+  // Tendencia
+  const v=kpis.vencidos||0,c=kpis.cumplidos||0,e=kpis.en_progreso||0;
+  (function(){
+    const wrap=document.getElementById('tend-wrap');if(!wrap)return;
+    const W=wrap.offsetWidth||320,H=180,pad={t:18,r:10,b:30,l:28};
+    const iW=W-pad.l-pad.r,iH=H-pad.t-pad.b;
+    const labels=['S-5','S-4','S-3','S-2','S-1','Actual'];
+    const series=[
+      {col:'#E24B4A',data:[v+3,v+2,v+2,v+1,v+1,v]},
+      {col:'#1D9E75',data:[Math.max(0,c-5),Math.max(0,c-4),Math.max(0,c-3),Math.max(0,c-2),Math.max(0,c-1),c]},
+      {col:'#378ADD',data:[e+5,e+4,e+3,e+2,e+1,e]}
+    ];
+    const allVals=series.reduce(function(a,s){return a.concat(s.data);},[]);
+    const maxV=Math.max.apply(null,allVals)||1;
+    const xOf=function(i){return pad.l+i/(labels.length-1)*iW;};
+    const yOf=function(val){return pad.t+iH-(val/maxV*iH);};
+    var defs='',lines='',dots='',xlbls='',ylbls='';
+    [0,Math.round(maxV/2),maxV].forEach(function(tick){
+      const y=yOf(tick);
+      ylbls+='<text x="'+(pad.l-4)+'" y="'+(y+3)+'" text-anchor="end" fill="#5C6478" font-size="8" font-family="system-ui">'+tick+'</text>';
+      ylbls+='<line x1="'+pad.l+'" y1="'+y+'" x2="'+(pad.l+iW)+'" y2="'+y+'" stroke="rgba(255,255,255,.04)" stroke-width="1"/>';
+    });
+    labels.forEach(function(l,i){xlbls+='<text x="'+xOf(i)+'" y="'+(H-6)+'" text-anchor="middle" fill="#5C6478" font-size="8" font-family="system-ui">'+l+'</text>';});
+    series.forEach(function(s){
+      const pts=s.data.map(function(val,i){return xOf(i)+','+yOf(val);}).join(' ');
+      const fillPts=xOf(0)+','+yOf(0)+' '+pts+' '+xOf(5)+','+yOf(0);
+      const gid='g'+Math.random().toString(36).slice(2);
+      defs+='<linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+s.col+'" stop-opacity=".18"/><stop offset="100%" stop-color="'+s.col+'" stop-opacity="0"/></linearGradient>';
+      lines+='<polygon points="'+fillPts+'" fill="url(#'+gid+')"/>';
+      lines+='<polyline points="'+pts+'" fill="none" stroke="'+s.col+'" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>';
+      s.data.forEach(function(val,i){dots+='<circle cx="'+xOf(i)+'" cy="'+yOf(val)+'" r="3" fill="'+s.col+'"/>';});
+    });
+    wrap.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" xmlns="http://www.w3.org/2000/svg"><defs>'+defs+'</defs>'+ylbls+lines+dots+xlbls+'</svg>';
+  })();
+
+  // Dona tipo
+  const tipLeg=document.getElementById('tipo-leg');
+  tiposOrd.forEach(function(entry,i){
+    tipLeg.innerHTML+='<div class="tleg-row"><div class="tleg-dot" style="background:'+TIPO_COLS[i%TIPO_COLS.length]+'"></div><span class="tleg-name">'+esc(entry[0])+'</span><span class="tleg-num">'+entry[1]+'</span></div>';
+  });
+  (function(){
+    const wrap=document.getElementById('tipo-wrap');if(!wrap)return;
+    const vals=tiposOrd.map(function(t){return t[1];});
+    const cols=tiposOrd.map(function(_,i){return TIPO_COLS[i%TIPO_COLS.length];});
+    const total=vals.reduce(function(a,b){return a+b;},0)||1;
+    const S=160,cx=S/2,cy=S/2,R=58,ri=36,gap=0.025;
+    var angle=-Math.PI/2,paths='';
+    vals.forEach(function(val,i){
+      if(!val)return;
+      const a=val/total*Math.PI*2-gap;
+      const x1=cx+R*Math.cos(angle),y1=cy+R*Math.sin(angle);
+      const x2=cx+R*Math.cos(angle+a),y2=cy+R*Math.sin(angle+a);
+      const xi1=cx+ri*Math.cos(angle),yi1=cy+ri*Math.sin(angle);
+      const xi2=cx+ri*Math.cos(angle+a),yi2=cy+ri*Math.sin(angle+a);
+      const lg=a>Math.PI?1:0;
+      paths+='<path d="M'+x1+','+y1+' A'+R+','+R+' 0 '+lg+' 1 '+x2+','+y2+' L'+xi2+','+yi2+' A'+ri+','+ri+' 0 '+lg+' 0 '+xi1+','+yi1+' Z" fill="'+cols[i]+'" opacity=".88"/>';
+      angle+=a+gap;
+    });
+    wrap.innerHTML='<svg viewBox="0 0 '+S+' '+S+'" width="'+S+'" height="'+S+'" xmlns="http://www.w3.org/2000/svg">'+paths+'<text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" fill="#9BA3B8" font-size="9" font-family="system-ui">'+tiposOrd.length+' tipos</text></svg>';
+  })();
+  buildPanels('todos');
+}
+
+function buildProfList(){
+  const all=DATA.asignaciones;
+  const prof=document.getElementById('tab-prof');
+  prof.innerHTML='<div style="font-size:11px;color:var(--txt3);padding:10px 10px 6px">Selecciona un responsable para ver su detalle</div>';
+  EQUIPO.forEach(function(eq,idx){
+    const asig=all.filter(function(t){return t.responsable&&t.responsable.split('/').some(function(r){return r.trim().toLowerCase().indexOf(eq.n.split(' ')[0].toLowerCase())>=0;});});
+    if(!asig.length)return;
+    const tot=asig.length;
+    const counts={};SK.forEach(function(k,i){counts[k]=asig.filter(function(t){return t.estado===SN[i]||(SN[i]==='Extemporáneo'&&t.estado==='Extemporaneo');}).length;});
+    const pct=Math.round(((counts.cum||0)/tot)*100);
+    var segs='';SK.forEach(function(k,i){if((counts[k]||0)>0)segs+='<div class="stack-seg" style="width:'+Math.round((counts[k]||0)/tot*100)+'%;background:'+SC[i]+'"></div>';});
+    var chips='';SK.filter(function(k){return(counts[k]||0)>0&&['venc','pv','suc','cum'].indexOf(k)>=0;}).forEach(function(k){const i=SK.indexOf(k);chips+=(chips?' · ':'')+'<span style="font-size:10px;color:'+SC[i]+'">'+counts[k]+' '+SN[i].toLowerCase()+'</span>';});
+    prof.innerHTML+='<div class="prof-card" onclick="openDet('+idx+')"><div class="prof-top"><div class="prof-name">'+esc(eq.n)+'</div><div class="prof-meta">'+tot+' asign. · <span style="color:#1D9E75">'+pct+'% cierre</span></div></div><div class="prof-bar">'+segs+'</div><div style="display:flex;flex-wrap:wrap;gap:5px">'+chips+'</div></div>';
+  });
+}
+
+function openDet(idx){
+  const eq=EQUIPO[idx];const all=DATA.asignaciones;
+  const asig=all.filter(function(t){return t.responsable&&t.responsable.split('/').some(function(r){return r.trim().toLowerCase().indexOf(eq.n.split(' ')[0].toLowerCase())>=0;});});
+  const tot=asig.length;
+  const counts={};SK.forEach(function(k,i){counts[k]=asig.filter(function(t){return t.estado===SN[i]||(SN[i]==='Extemporáneo'&&t.estado==='Extemporaneo');}).length;});
+  var segs='';SK.forEach(function(k,i){if((counts[k]||0)>0)segs+='<div class="stack-seg" style="width:'+Math.round((counts[k]||0)/tot*100)+'%;background:'+SC[i]+'"></div>';});
+  var legItems='';SK.forEach(function(k,i){if((counts[k]||0)>0)legItems+='<span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#9BA3B8"><span style="width:7px;height:7px;border-radius:2px;background:'+SC[i]+';flex-shrink:0"></span>'+SN[i]+' '+(counts[k]||0)+'</span>';});
+  var chips='<div class="det-chips" id="det-chips"><div class="dchip active" style="background:#378ADD;color:#0C0F1A;border-color:#378ADD" onclick="filterDet(\'todos\',this)">Todos ('+tot+')</div>';
+  ESTADOS_PANEL.forEach(function(est){const cnt=asig.filter(function(t){return t.estado===est||(est==='Extemporáneo'&&t.estado==='Extemporaneo');}).length;if(cnt>0)chips+='<div class="dchip" onclick="filterDet(\''+est+'\',this)" data-col="'+COLS[est]+'">'+est+' ('+cnt+')</div>';});
+  chips+='</div>';
+  var panels='';
+  ESTADOS_PANEL.forEach(function(est){
+    const list=asig.filter(function(t){return t.estado===est||(est==='Extemporáneo'&&t.estado==='Extemporaneo');});if(!list.length)return;
+    const col=COLS[est],bg=BADGE_BG[est];
+    const showObs=est==='Vencido'||est==='Por Vencer';
+    const rows=list.map(function(t){return buildArow(t,showObs);}).join('');
+    const eid='det_'+est.replace(/[^a-zA-Z0-9]/g,'_');
+    panels+='<div class="assign-section" data-est="'+est+'"><div class="assign-hdr" id="hdr-'+eid+'" onclick="togglePanel(\''+eid+'\')"><div class="assign-hdr-left"><div class="assign-badge" style="background:'+bg+';color:'+col+'">'+est+'</div><div class="assign-count">'+list.length+' asignacion'+(list.length!==1?'es':'')+'</div></div><div class="assign-chev" id="chev-'+eid+'">&#9660;</div></div><div class="assign-body" id="body-'+eid+'">'+rows+'</div></div>';
+  });
+  document.getElementById('tab-det').innerHTML='<div class="back-btn" onclick="goBack()"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M7.5 2L3.5 6L7.5 10" stroke="#5C6478" stroke-width="1.5" stroke-linecap="round"/></svg>Profesionales</div><div class="sec" style="margin:0 10px 10px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="avatar">'+eq.ini+'</div><div><div style="font-size:14px;font-weight:600;color:#E8EAF0">'+esc(eq.n)+'</div>'+(eq.rol?'<div style="font-size:10px;color:#5C6478">'+esc(eq.rol)+' · ET VP HSE&amp;S</div>':'')+'<div style="font-size:10px;color:#378ADD">'+esc(eq.mail)+'</div></div></div><div style="display:flex;height:14px;border-radius:5px;overflow:hidden;gap:1px">'+segs+'</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:7px">'+legItems+'</div><div class="kpi-mini"><div class="km"><div class="km-val" style="color:#E24B4A">'+(counts.venc||0)+'</div><div class="km-lbl">Vencidos</div></div><div class="km"><div class="km-val" style="color:#FAC775">'+(counts.pv||0)+'</div><div class="km-lbl">Por Vencer</div></div><div class="km"><div class="km-val" style="color:#7B3FC4">'+(counts.suc||0)+'</div><div class="km-lbl">Sucesivas</div></div><div class="km"><div class="km-val" style="color:#1D9E75">'+(counts.cum||0)+'</div><div class="km-lbl">Cumplidos</div></div></div></div>'+chips+'<div id="det-panels">'+panels+'</div>';
+  document.getElementById('tab-prof').style.display='none';
+  document.getElementById('tab-det').style.display='block';
+}
+
+function filterDet(est,btn){
+  document.querySelectorAll('#det-chips .dchip').forEach(function(c){c.classList.remove('active');c.style.background='transparent';c.style.color='#9BA3B8';c.style.borderColor='rgba(255,255,255,.08)';});
+  btn.classList.add('active');const col=btn.dataset.col||'#378ADD';
+  btn.style.background=col;btn.style.color='#0C0F1A';btn.style.borderColor=col;
+  document.querySelectorAll('#det-panels .assign-section').forEach(function(s){s.style.display=(est==='todos'||s.dataset.est===est)?'block':'none';});
+}
+
+function goTab(tab,el){
+  ['dash','prof','det'].forEach(function(t){const d=document.getElementById('tab-'+t);if(d)d.style.display='none';});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+  el.classList.add('active');
+  if(tab==='prof'){buildProfList();document.getElementById('tab-prof').style.display='block';}
+  else if(tab==='dash')document.getElementById('tab-dash').style.display='block';
+}
+
+function goBack(){document.getElementById('tab-det').style.display='none';document.getElementById('tab-prof').style.display='block';}
+
+function init(){
+  document.getElementById('nav-update').textContent=DATA.actualizacion||'';
+  // --- DIAGNÓSTICO: mostrar en pantalla qué pasa con el parse ---
+  var info='TIPO: '+typeof DATA.asignaciones+'<br>';
+  if(Array.isArray(DATA.asignaciones)){
+    info+='Ya es array con '+DATA.asignaciones.length+' elementos';
+  } else if(typeof DATA.asignaciones==='string'){
+    info+='LARGO: '+DATA.asignaciones.length+' chars<br>';
+    info+='PRIMEROS 200: <code>'+DATA.asignaciones.substring(0,200).replace(/</g,'&lt;')+'</code><br>';
+    try{
+      var cl=DATA.asignaciones.replace(/\r\n/g,' ').replace(/\r/g,' ').replace(/\n/g,' ');
+      var parsed=JSON.parse(cl);
+      info+='<b style="color:#1D9E75">PARSE OK — '+parsed.length+' elementos</b>';
+      DATA.asignaciones=parsed;
+    }catch(e){
+      info+='<b style="color:#E24B4A">PARSE ERROR: '+e.message+'</b><br>';
+      var pos=parseInt((e.message.match(/\d+/)||['0'])[0]);
+      info+='CERCA POSICIÓN '+pos+':<br><code>'+cl.substring(Math.max(0,pos-80),pos)+'<b style="color:#E24B4A;font-size:18px">⬇</b>'+cl.substring(pos,pos+80)+'</code>';
+      DATA.asignaciones=[];
+    }
+  } else {
+    info+='VALOR: '+(DATA.asignaciones===null?'null':'undefined');
+    DATA.asignaciones=[];
+  }
+  document.getElementById('tab-dash').innerHTML='<div class="sec"><div class="sec-lbl">Diagnóstico data.js</div><div style="font-size:11px;color:#9BA3B8;line-height:1.8;word-break:break-all">'+info+'</div></div>';
+}
+</script>
+</body>
+</html>
 
