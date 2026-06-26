@@ -394,21 +394,31 @@ function goTab(tab,el){
 function goBack(){document.getElementById('tab-det').style.display='none';document.getElementById('tab-prof').style.display='block';}
 
 function init(){
-  // Normalizar DATA.asignaciones
-  if(Array.isArray(DATA.asignaciones)){
-    // ya es array — nada que hacer
-  } else if(typeof DATA.asignaciones==='string'){
-    try{
-      var cl=DATA.asignaciones.replace(/\r\n/g,' ').replace(/\r/g,' ').replace(/\n/g,' ').trim();
-      // El flujo genera objetos separados por comas sin corchetes de array
-      if(cl.charAt(0)!=='[') cl='['+cl+']';
-      DATA.asignaciones=JSON.parse(cl);
-    }catch(e){DATA.asignaciones=[];}
-  } else {
-    DATA.asignaciones=[];
-  }
   document.getElementById('nav-update').textContent=DATA.actualizacion||'';
-  buildDash();
+  var info='<b>DIAG v2</b> — '+new Date().toLocaleTimeString()+'<br>';
+  info+='TIPO: '+typeof DATA.asignaciones+'<br>';
+  if(typeof DATA.asignaciones==='string'){
+    info+='LARGO: '+DATA.asignaciones.length+'<br>';
+    var cl=DATA.asignaciones.replace(/\r\n/g,' ').replace(/\r/g,' ').replace(/\n/g,' ').trim();
+    info+='PRIMER CHAR: ['+cl.charAt(0)+'] ULTIMO: ['+cl.charAt(cl.length-1)+']<br>';
+    if(cl.charAt(0)!=='[') cl='['+cl+']';
+    info+='CON CORCHETES: ['+cl.charAt(0)+']...['+cl.charAt(cl.length-1)+']<br>';
+    try{
+      var parsed=JSON.parse(cl);
+      info+='<b style="color:#1D9E75">PARSE OK — '+parsed.length+' elementos</b>';
+      DATA.asignaciones=parsed;
+    }catch(e){
+      info+='<b style="color:#E24B4A">ERROR: '+e.message+'</b><br>';
+      var pos=parseInt((e.message.match(/\d+/)||['0'])[0]);
+      info+='POS '+pos+':<br><code style="font-size:10px">...'+cl.substring(Math.max(0,pos-100),pos)+'<b style="color:red;font-size:16px">|ERROR|</b>'+cl.substring(pos,pos+100).replace(/</g,'&lt;')+'...</code>';
+      DATA.asignaciones=[];
+    }
+  } else if(Array.isArray(DATA.asignaciones)){
+    info+='<b style="color:#1D9E75">Array con '+DATA.asignaciones.length+' items</b>';
+  } else {
+    info+='NULL/UNDEFINED';DATA.asignaciones=[];
+  }
+  document.getElementById('tab-dash').innerHTML='<div class="sec"><div class="sec-lbl">Diagnostico v2</div><div style="font-size:11px;color:#9BA3B8;line-height:1.8;word-break:break-all">'+info+'</div></div>';
 }
 </script>
 </body>
