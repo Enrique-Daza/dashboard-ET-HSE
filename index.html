@@ -398,9 +398,16 @@ function goTab(tab,el){
 function goBack(){document.getElementById('tab-det').style.display='none';document.getElementById('tab-prof').style.display='block';}
 
 function init(){
+  // Normalizar asignaciones: el paso Redactar de Power Automate las envuelve
+  // en comillas y llegan como string en lugar de array. Se parsea aquí una vez.
+  if(typeof DATA.asignaciones === 'string'){
+    try{ DATA.asignaciones = JSON.parse(DATA.asignaciones); }
+    catch(e){ DATA.asignaciones = []; }
+  }
   document.getElementById('nav-update').textContent=DATA.actualizacion;
   buildDash();
 }
 </script>
 </body>
 </html>
+
